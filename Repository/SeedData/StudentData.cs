@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Model;
+using DomainModel;
 
 namespace Repository.SeedData {
     public static class StudentsData {

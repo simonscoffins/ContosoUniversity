@@ -46,9 +46,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="MediatR">
-      <HintPath>..\packages\MediatR.2.0.2\lib\net45\MediatR.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -213,13 +210,13 @@
       <Project>{E2C78A38-5185-4E5F-81FB-59F1B3F48DD0}</Project>
       <Name>BusinessServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{71EFBA67-EC6B-46CD-B455-18F12EBB32A6}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTOs\DTOs.csproj">
       <Project>{F40067B7-F46F-49FD-9BA5-A15EFA1D6200}</Project>
       <Name>DTOs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{71EFBA67-EC6B-46CD-B455-18F12EBB32A6}</Project>
-      <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
       <Project>{CB13B245-85FB-4F0D-811B-EACEA8B85380}</Project>

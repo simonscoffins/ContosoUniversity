@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Threading.Tasks;
+using DomainModel;
 using MediatR;
-using Model;
 using Repository;
 
 namespace BusinessServices.Departments {

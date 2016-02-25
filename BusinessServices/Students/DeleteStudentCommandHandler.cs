@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
+using System.Threading.Tasks;
+using DomainModel;
 using DTOs;
-using Model;
 using Repository;
 
 namespace BusinessServices.Students {
@@ -11,7 +12,7 @@ namespace BusinessServices.Students {
     }
 
 
-    public class DeleteStudentCommandHandler : ICommandHandler<DeleteStudentCommand> {
+    public class DeleteStudentCommandHandler : IAsyncCommandHandler<DeleteStudentCommand> {
 
         private readonly IUnitOfWork _uow;
 
@@ -19,14 +20,14 @@ namespace BusinessServices.Students {
             _uow = uow;
         }
 
-        public void Handle(DeleteStudentCommand command) {
+        public async Task Handle(DeleteStudentCommand command) {
 
             var student = new Student { Id = command.Id };
 
             _uow.Entry(student).State = EntityState.Deleted;
             _uow.Set<Student>().Remove(student);
 
-            _uow.SaveChanges();
+            await _uow.SaveChangesAsync();
         }
     }
 }

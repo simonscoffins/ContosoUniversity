@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using Model;
+using DomainModel;
 
 namespace Repository {
     public class ContosoUniversityContext : DbContext, IUnitOfWork {

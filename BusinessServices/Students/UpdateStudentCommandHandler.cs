@@ -1,5 +1,5 @@
-﻿using DTOs;
-using Model;
+﻿using DomainModel;
+using DTOs;
 using Repository;
 
 namespace BusinessServices.Students {

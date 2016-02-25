@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using BusinessServices;
 using BusinessServices.Students;
@@ -10,8 +11,8 @@ namespace Web.Api {
 
         // queries
         private readonly IQueryProcessor _queryProcessor;
-        
-        public StudentsQueryProcessorController (IQueryProcessor queryProcessor) {
+
+        public StudentsQueryProcessorController(IQueryProcessor queryProcessor) {
             _queryProcessor = queryProcessor;
         }
 
@@ -20,7 +21,7 @@ namespace Web.Api {
         [HttpGet]
         public IHttpActionResult GetById(int id) {
 
-            var query = new GetStudentByIdQuery {Id = id};
+            var query = new GetStudentByIdQuery { Id = id };
             var student = _queryProcessor.Process(query);
             return Ok(student);
         }
@@ -28,11 +29,11 @@ namespace Web.Api {
 
         [Route("api/students")]
         [HttpGet]
-        public IHttpActionResult Get() {
+        public async Task<IHttpActionResult> Get() {
 
             // how to handle with no parameters
             var query = new GetAllStudentsQuery();
-            var students = _queryProcessor.Process(query);
+            var students = await _queryProcessor.ProcessAsync(query);
             return Ok(students);
         }
 
@@ -41,7 +42,7 @@ namespace Web.Api {
         [HttpGet]
         public IHttpActionResult FindByName(string name) {
 
-            var query = new FindStudentsByNameQuery{ Name = name};
+            var query = new FindStudentsByNameQuery { Name = name };
             var students = _queryProcessor.Process(query);
             return Ok(students);
         }
@@ -51,7 +52,7 @@ namespace Web.Api {
         [HttpGet]
         public IHttpActionResult FindByYear(int year) {
 
-            var query = new FindStudentsByEnrollmentYearQuery { EnrollmentYear = year};
+            var query = new FindStudentsByEnrollmentYearQuery { EnrollmentYear = year };
             var students = _queryProcessor.Process(query);
             return Ok(students);
         }

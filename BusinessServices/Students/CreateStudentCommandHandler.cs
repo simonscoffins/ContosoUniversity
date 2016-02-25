@@ -1,5 +1,7 @@
 ﻿using System;
-using Model;
+using System.Threading.Tasks;
+using BusinessServices.CQS.Commands;
+using DomainModel;
 using Repository;
 
 namespace BusinessServices.Students {
@@ -19,7 +21,6 @@ namespace BusinessServices.Students {
             _uow = uow;
         }
 
-
         public void Handle(CreateStudentCommand command) {
 
             var student = new Student {
@@ -29,7 +30,9 @@ namespace BusinessServices.Students {
             };
 
             _uow.Set<Student>().Add(student);
-            _uow.SaveChanges();
+
+            var task = _uow.SaveChangesAsync();
+            task.Wait();
         }
     }
 }

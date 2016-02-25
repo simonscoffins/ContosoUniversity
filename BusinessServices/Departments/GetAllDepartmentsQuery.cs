@@ -2,21 +2,20 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using DomainModel;
 using MediatR;
-using Model;
 using Repository;
 
 namespace BusinessServices.Departments {
 
-    public class GetAllDepartmentsQuery : IAsyncRequest<IEnumerable<DepartmentDto>> {}
+    public class GetAllDepartmentsQuery : IAsyncRequest<IEnumerable<DepartmentDto>> { }
 
 
-    public class GetAllDepartmentsQueryHandler : IAsyncRequestHandler<GetAllDepartmentsQuery, IEnumerable<DepartmentDto>>
-    {
+    public class GetAllDepartmentsQueryHandler : IAsyncRequestHandler<GetAllDepartmentsQuery, IEnumerable<DepartmentDto>> {
 
         private readonly IUnitOfWork _uow;
 
-        public GetAllDepartmentsQueryHandler (IUnitOfWork uow) {
+        public GetAllDepartmentsQueryHandler(IUnitOfWork uow) {
             _uow = uow;
         }
 
@@ -30,5 +29,4 @@ namespace BusinessServices.Departments {
             }).ToListAsync();
         }
     }
-
 }

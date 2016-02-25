@@ -1,5 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using BusinessServices;
+using BusinessServices.CQS.Commands;
 using BusinessServices.Students;
 
 namespace Web.Api {
@@ -9,25 +11,24 @@ namespace Web.Api {
         // commands
         private readonly ICommandHandler<UpdateStudentCommand> _updateStudent;
         private readonly ICommandHandler<CreateStudentCommand> _createStudent;
-        private readonly ICommandHandler<DeleteStudentCommand> _deleteStudent;
+        private readonly IAsyncCommandHandler<DeleteStudentCommand> _deleteStudent;
 
-        public StudentsCommandController (
+        public StudentsCommandController(
 
             ICommandHandler<UpdateStudentCommand> updateStudent,
             ICommandHandler<CreateStudentCommand> createStudent,
-            ICommandHandler<DeleteStudentCommand> deleteStudent) {
+            IAsyncCommandHandler<DeleteStudentCommand> deleteStudent) {
 
             _updateStudent = updateStudent;
             _createStudent = createStudent;
             _deleteStudent = deleteStudent;
-
         }
 
 
 
         [Route("api/updatestudent")]
         [HttpGet]
-        public IHttpActionResult UpdateStudent () {
+        public IHttpActionResult UpdateStudent() {
 
             _updateStudent.Handle(new UpdateStudentCommand {
                 Id = 2,
@@ -41,7 +42,7 @@ namespace Web.Api {
 
         [Route("api/createstudent")]
         [HttpGet]
-        public IHttpActionResult CreateStudent () {
+        public IHttpActionResult CreateStudent() {
 
             _createStudent.Handle(new CreateStudentCommand {
                 FirstName = "Check",
@@ -52,14 +53,11 @@ namespace Web.Api {
         }
 
 
-        [Route("api/deletestudent")]
+        [Route("api/deletestudent/{id}")]
         [HttpGet]
-        public IHttpActionResult DeleteStudent () {
+        public async Task<IHttpActionResult> DeleteStudent(int id) {
 
-            _deleteStudent.Handle(new DeleteStudentCommand {
-                Id = 2
-            });
-
+            await _deleteStudent.Handle(new DeleteStudentCommand { Id = id });
             return Ok();
         }
 

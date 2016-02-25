@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using DomainModel;
 using DTOs;
-using Model;
 using Repository;
 
 namespace BusinessServices.Students {

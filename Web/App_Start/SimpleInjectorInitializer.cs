@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Http;
 using BusinessServices;
+using BusinessServices.CQS.Commands;
+using BusinessServices.Decorators;
 using MediatR;
 using Repository;
 using SimpleInjector;
@@ -35,12 +37,26 @@ namespace Web.App_Start {
             // register implementations of generic ICommandHandler
             container.Register(typeof(ICommandHandler<>), new[] { typeof(ICommandHandler<>).Assembly }, webApiLifeStyle);
 
+
+            container.RegisterDecorator(
+                typeof(ICommandHandler<>),
+                typeof(SaveCommandHandlerDecorator<>));
+
+
+
+            container.Register(typeof(IAsyncCommandHandler<>), new[] { typeof(IAsyncCommandHandler<>).Assembly }, webApiLifeStyle);
+
+            //container.Register(typeof(ICommandResponseHandler<,>), new[] { typeof(ICommandResponseHandler<,>).Assembly }, webApiLifeStyle);
+            //container.Register(typeof(IAsyncCommandResponseHandler<,>), new[] { typeof(IAsyncCommandResponseHandler<,>).Assembly }, webApiLifeStyle);
+
+
             // register implementations of generic IQueryHandler
             container.Register(typeof(IQueryHandler<,>), new[] { typeof(IQueryHandler<,>).Assembly }, webApiLifeStyle);
+            container.Register(typeof(IAsyncQueryHandler<,>), new[] { typeof(IAsyncQueryHandler<,>).Assembly }, webApiLifeStyle);
 
             // register implementations of generic IQueryHandler
             container.Register<IQueryProcessor, QueryProcessor>();
-
+            //            container.Register<ICommandProcessor, CommandProcessor>();
         }
 
 
@@ -48,19 +64,21 @@ namespace Web.App_Start {
 
             var webApiLifeStyle = new WebApiRequestLifestyle();
 
+
+
             var assemblies = GetAssemblies().ToArray();
             container.RegisterSingleton<IMediator, Mediator>();
             container.Register(typeof(IRequestHandler<,>), assemblies, webApiLifeStyle);
             container.Register(typeof(IAsyncRequestHandler<,>), assemblies, webApiLifeStyle);
-            container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
-            container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
+            //container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
+            //container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
             //container.RegisterSingleton(Console.Out);
             container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
-            container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
+            //container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
         }
 
 
-        private static IEnumerable<Assembly> GetAssemblies () {
+        private static IEnumerable<Assembly> GetAssemblies() {
             yield return typeof(IMediator).GetTypeInfo().Assembly;
             yield return typeof(Ping).GetTypeInfo().Assembly;
         }
