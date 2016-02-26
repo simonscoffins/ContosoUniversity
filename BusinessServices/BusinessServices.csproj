@@ -51,20 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CQS\Commands\CommandResponse.cs" />
-    <Compile Include="CQS\Commands\IAsyncCommandHandler.cs" />
-    <Compile Include="CQS\Commands\ICommand.cs" />
-    <Compile Include="CQS\Commands\IAsyncCommandResponseHandler.cs" />
-    <Compile Include="CQS\Commands\ICommandResponseHandler.cs" />
+    <Compile Include="CQS\ICommandHandler.cs" />
     <Compile Include="CQS\Queries\IAsyncQueryHandler.cs" />
     <Compile Include="Decorators\SaveCommandHandlerDecorator.cs" />
     <Compile Include="Departments\DepartmentDto.cs" />
     <Compile Include="Departments\GetAllDepartmentsQuery.cs" />
     <Compile Include="Departments\GetDepartmentByIdQuery.cs" />
-    <Compile Include="CQS\Commands\ICommandHandler.cs" />
     <Compile Include="CQS\Queries\IQuery.cs" />
     <Compile Include="CQS\Queries\IQueryHandler.cs" />
     <Compile Include="CQS\Queries\IQueryProcessor.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="MediatR\IAsyncRequest.cs" />
     <Compile Include="MediatR\IAsyncRequestHandler.cs" />
     <Compile Include="MediatR\IMediator.cs" />

@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.UI;
 using BusinessServices;
-using BusinessServices.CQS.Commands;
+using BusinessServices.CQS;
 using BusinessServices.Students;
 
 namespace Web.Api {
@@ -9,14 +10,14 @@ namespace Web.Api {
     public class StudentsCommandController : ApiController {
 
         // commands
-        private readonly ICommandHandler<UpdateStudentCommand> _updateStudent;
-        private readonly ICommandHandler<CreateStudentCommand> _createStudent;
+        private readonly IAsyncCommandHandler<UpdateStudentCommand> _updateStudent;
+        private readonly IAsyncCommandHandler<CreateStudentCommand> _createStudent;
         private readonly IAsyncCommandHandler<DeleteStudentCommand> _deleteStudent;
 
         public StudentsCommandController(
 
-            ICommandHandler<UpdateStudentCommand> updateStudent,
-            ICommandHandler<CreateStudentCommand> createStudent,
+            IAsyncCommandHandler<UpdateStudentCommand> updateStudent,
+            IAsyncCommandHandler<CreateStudentCommand> createStudent,
             IAsyncCommandHandler<DeleteStudentCommand> deleteStudent) {
 
             _updateStudent = updateStudent;
@@ -28,9 +29,9 @@ namespace Web.Api {
 
         [Route("api/updatestudent")]
         [HttpGet]
-        public IHttpActionResult UpdateStudent() {
+        public async Task<IHttpActionResult> UpdateStudent() {
 
-            _updateStudent.Handle(new UpdateStudentCommand {
+            await _updateStudent.Handle(new UpdateStudentCommand {
                 Id = 2,
                 FirstName = "Judge",
                 LastName = "Dredd"
@@ -42,14 +43,17 @@ namespace Web.Api {
 
         [Route("api/createstudent")]
         [HttpGet]
-        public IHttpActionResult CreateStudent() {
+        public async Task<IHttpActionResult> CreateStudent() {
 
-            _createStudent.Handle(new CreateStudentCommand {
+            var command = new CreateStudentCommand {
                 FirstName = "Check",
                 LastName = "This"
-            });
+            };
 
-            return Ok();
+            await _createStudent.Handle(command);
+
+            // retunr the new student id from the command
+            return Ok(command.Id);
         }
 
 

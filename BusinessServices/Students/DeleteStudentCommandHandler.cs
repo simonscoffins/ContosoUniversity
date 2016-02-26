@@ -1,8 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Threading.Tasks;
+using BusinessServices.CQS;
 using DomainModel;
 using DTOs;
 using Repository;
+using TaskExtensions = BusinessServices.Extensions.TaskExtensions;
 
 namespace BusinessServices.Students {
 
@@ -20,14 +22,14 @@ namespace BusinessServices.Students {
             _uow = uow;
         }
 
-        public async Task Handle(DeleteStudentCommand command) {
+        public Task Handle(DeleteStudentCommand command) {
 
             var student = new Student { Id = command.Id };
 
             _uow.Entry(student).State = EntityState.Deleted;
             _uow.Set<Student>().Remove(student);
 
-            await _uow.SaveChangesAsync();
+            return TaskExtensions.CompletedTask;
         }
     }
 }

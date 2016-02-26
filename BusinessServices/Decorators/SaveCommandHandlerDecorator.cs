@@ -1,23 +1,24 @@
-﻿using Repository;
+﻿using System.Threading.Tasks;
+using BusinessServices.CQS;
+using Repository;
 
 namespace BusinessServices.Decorators {
 
 
-    public class SaveCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand> {
+    public class SaveCommandHandlerDecorator<TCommand> : IAsyncCommandHandler<TCommand> {
 
-        private readonly ICommandHandler<TCommand> _decorated;
+        private readonly IAsyncCommandHandler<TCommand> _decorated;
         private readonly IUnitOfWork _uow;
 
-        public SaveCommandHandlerDecorator(ICommandHandler<TCommand> decorated, IUnitOfWork uow) {
+        public SaveCommandHandlerDecorator(IAsyncCommandHandler<TCommand> decorated, IUnitOfWork uow) {
             _decorated = decorated;
             _uow = uow;
         }
 
-        public void Handle(TCommand command) {
+        public async Task Handle(TCommand command) {
 
-            _decorated.Handle(command);
-            //var task = _uow.SaveChangesAsync();
-            //task.Wait();
+            await _decorated.Handle(command);
+            await _uow.SaveChangesAsync();
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Http;
 using BusinessServices;
-using BusinessServices.CQS.Commands;
+using BusinessServices.CQS;
+using BusinessServices.CQS.Queries;
 using BusinessServices.Decorators;
 using MediatR;
 using Repository;
@@ -34,21 +35,12 @@ namespace Web.App_Start {
             // unit of work - db context injection
             container.Register<IUnitOfWork, ContosoUniversityContext>(webApiLifeStyle);
 
-            // register implementations of generic ICommandHandler
-            container.Register(typeof(ICommandHandler<>), new[] { typeof(ICommandHandler<>).Assembly }, webApiLifeStyle);
-
-
-            container.RegisterDecorator(
-                typeof(ICommandHandler<>),
-                typeof(SaveCommandHandlerDecorator<>));
-
-
-
+            // register implementations of generic IAsyncCommandHandler
             container.Register(typeof(IAsyncCommandHandler<>), new[] { typeof(IAsyncCommandHandler<>).Assembly }, webApiLifeStyle);
 
-            //container.Register(typeof(ICommandResponseHandler<,>), new[] { typeof(ICommandResponseHandler<,>).Assembly }, webApiLifeStyle);
-            //container.Register(typeof(IAsyncCommandResponseHandler<,>), new[] { typeof(IAsyncCommandResponseHandler<,>).Assembly }, webApiLifeStyle);
-
+            container.RegisterDecorator(
+                typeof(IAsyncCommandHandler<>),
+                typeof(SaveCommandHandlerDecorator<>));
 
             // register implementations of generic IQueryHandler
             container.Register(typeof(IQueryHandler<,>), new[] { typeof(IQueryHandler<,>).Assembly }, webApiLifeStyle);

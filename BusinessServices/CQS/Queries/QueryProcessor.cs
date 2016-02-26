@@ -1,10 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using BusinessServices.Departments;
 using SimpleInjector;
 
-namespace BusinessServices {
+namespace BusinessServices.CQS.Queries {
 
     public class QueryProcessor : IQueryProcessor {
 

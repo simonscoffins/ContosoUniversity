@@ -1,6 +1,11 @@
-﻿using DomainModel;
+﻿using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using BusinessServices.CQS;
+using BusinessServices.Extensions;
+using DomainModel;
 using DTOs;
 using Repository;
+using TaskExtensions = BusinessServices.Extensions.TaskExtensions;
 
 namespace BusinessServices.Students {
 
@@ -12,7 +17,7 @@ namespace BusinessServices.Students {
     }
 
 
-    public class UpdateStudentCommandHandler : ICommandHandler<UpdateStudentCommand> {
+    public class UpdateStudentCommandHandler : IAsyncCommandHandler<UpdateStudentCommand> {
 
         private readonly IUnitOfWork _uow;
 
@@ -21,15 +26,16 @@ namespace BusinessServices.Students {
             _uow = uow;
         }
 
-        public void Handle(UpdateStudentCommand command) {
+        public Task Handle(UpdateStudentCommand command) {
 
             var student = _uow.Set<Student>().Find(command.Id);
 
             student.FirstMidName = command.FirstName;
             student.LastName = command.LastName;
 
-            // move to decorator
-            _uow.SaveChanges();
+
+            return TaskExtensions.CompletedTask;
         }
+
     }
 }
