@@ -1,28 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using BusinessServices;
+using BusinessServices.CQS;
 using BusinessServices.Students;
-using DTOs;
 
 namespace Web.Api {
 
-    public class StudentsQueryProcessorController : ApiController {
+    public class StudentsQueryMediatorController : ApiController {
 
         // queries
-        private readonly IQueryProcessor _queryProcessor;
+        private readonly IQueryMediator _queryMediator;
 
-        public StudentsQueryProcessorController(IQueryProcessor queryProcessor) {
-            _queryProcessor = queryProcessor;
+        public StudentsQueryMediatorController(IQueryMediator queryProcessor) {
+            _queryMediator = queryProcessor;
         }
 
 
         [Route("api/students/{id}")]
         [HttpGet]
-        public IHttpActionResult GetById(int id) {
+        public async Task<IHttpActionResult> GetById(int id) {
 
             var query = new GetStudentByIdQuery { Id = id };
-            var student = _queryProcessor.Process(query);
+            var student = await _queryMediator.ExecuteAsync(query);
             return Ok(student);
         }
 
@@ -33,27 +31,27 @@ namespace Web.Api {
 
             // how to handle with no parameters
             var query = new GetAllStudentsQuery();
-            var students = await _queryProcessor.ProcessAsync(query);
+            var students = await _queryMediator.ExecuteAsync(query);
             return Ok(students);
         }
 
 
         [Route("api/students/name/{name}")]
         [HttpGet]
-        public IHttpActionResult FindByName(string name) {
+        public async Task<IHttpActionResult> FindByName(string name) {
 
             var query = new FindStudentsByNameQuery { Name = name };
-            var students = _queryProcessor.Process(query);
+            var students = await _queryMediator.ExecuteAsync(query);
             return Ok(students);
         }
 
 
         [Route("api/students/year/{year}")]
         [HttpGet]
-        public IHttpActionResult FindByYear(int year) {
+        public async Task<IHttpActionResult> FindByYear(int year) {
 
             var query = new FindStudentsByEnrollmentYearQuery { EnrollmentYear = year };
-            var students = _queryProcessor.Process(query);
+            var students = await _queryMediator.ExecuteAsync(query);
             return Ok(students);
         }
 

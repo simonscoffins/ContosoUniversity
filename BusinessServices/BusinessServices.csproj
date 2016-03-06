@@ -51,37 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CQS\ICommandHandler.cs" />
-    <Compile Include="CQS\Queries\IAsyncQueryHandler.cs" />
+    <Compile Include="CQS\IAsyncCommandHandler.cs" />
+    <Compile Include="CQS\IAsyncQueryHandler.cs" />
     <Compile Include="Decorators\SaveCommandHandlerDecorator.cs" />
-    <Compile Include="Departments\DepartmentDto.cs" />
-    <Compile Include="Departments\GetAllDepartmentsQuery.cs" />
-    <Compile Include="Departments\GetDepartmentByIdQuery.cs" />
-    <Compile Include="CQS\Queries\IQuery.cs" />
-    <Compile Include="CQS\Queries\IQueryHandler.cs" />
-    <Compile Include="CQS\Queries\IQueryProcessor.cs" />
+    <Compile Include="CQS\IQuery.cs" />
+    <Compile Include="CQS\IQueryMediator.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="MediatR\IAsyncRequest.cs" />
-    <Compile Include="MediatR\IAsyncRequestHandler.cs" />
-    <Compile Include="MediatR\IMediator.cs" />
-    <Compile Include="MediatR\AsyncRequestHandlerWrapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MediatR\RequestHandlerWrapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MediatR\IRequest.cs" />
-    <Compile Include="MediatR\IRequestHandler.cs" />
-    <Compile Include="MediatR\Mediator.cs" />
-    <Compile Include="MediatR\SingleInstanceFactory.cs" />
-    <Compile Include="MediatR\Unit.cs" />
     <Compile Include="Ping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Students\FindStudentsByEnrollmentYearQueryHandler.cs" />
     <Compile Include="Students\GeAllStudentsQueryHandler.cs" />
     <Compile Include="Students\GetStudentByIdQueryHandler.cs" />
     <Compile Include="Students\FindStudentsByNameQueryHandler.cs" />
-    <Compile Include="CQS\Queries\QueryProcessor.cs" />
+    <Compile Include="CQS\QueryMediator.cs" />
     <Compile Include="Students\CreateStudentCommandHandler.cs" />
     <Compile Include="Students\DeleteStudentCommandHandler.cs" />
     <Compile Include="Students\UpdateStudentCommandHandler.cs" />

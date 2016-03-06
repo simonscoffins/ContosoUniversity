@@ -5,9 +5,7 @@ using System.Reflection;
 using System.Web.Http;
 using BusinessServices;
 using BusinessServices.CQS;
-using BusinessServices.CQS.Queries;
 using BusinessServices.Decorators;
-using MediatR;
 using Repository;
 using SimpleInjector;
 using SimpleInjector.Extensions;
@@ -21,7 +19,7 @@ namespace Web.App_Start {
             var container = new Container();
 
             InitializeContainer(container);
-            InitializeMediator(container);
+//            InitializeMediator(container);
 
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
             container.Verify();
@@ -42,38 +40,36 @@ namespace Web.App_Start {
                 typeof(IAsyncCommandHandler<>),
                 typeof(SaveCommandHandlerDecorator<>));
 
-            // register implementations of generic IQueryHandler
-            container.Register(typeof(IQueryHandler<,>), new[] { typeof(IQueryHandler<,>).Assembly }, webApiLifeStyle);
+            // register implementations of generic IAsyncQueryHandler
             container.Register(typeof(IAsyncQueryHandler<,>), new[] { typeof(IAsyncQueryHandler<,>).Assembly }, webApiLifeStyle);
 
-            // register implementations of generic IQueryHandler
-            container.Register<IQueryProcessor, QueryProcessor>();
-            //            container.Register<ICommandProcessor, CommandProcessor>();
+            // register implementations of IQueryMediator
+            container.Register<IQueryMediator, QueryMediator>();
         }
 
 
-        private static void InitializeMediator(Container container) {
+        //private static void InitializeMediator(Container container) {
 
-            var webApiLifeStyle = new WebApiRequestLifestyle();
-
-
-
-            var assemblies = GetAssemblies().ToArray();
-            container.RegisterSingleton<IMediator, Mediator>();
-            container.Register(typeof(IRequestHandler<,>), assemblies, webApiLifeStyle);
-            container.Register(typeof(IAsyncRequestHandler<,>), assemblies, webApiLifeStyle);
-            //container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
-            //container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
-            //container.RegisterSingleton(Console.Out);
-            container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
-            //container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
-        }
+        //    var webApiLifeStyle = new WebApiRequestLifestyle();
 
 
-        private static IEnumerable<Assembly> GetAssemblies() {
-            yield return typeof(IMediator).GetTypeInfo().Assembly;
-            yield return typeof(Ping).GetTypeInfo().Assembly;
-        }
+
+        //    var assemblies = GetAssemblies().ToArray();
+        //    container.RegisterSingleton<IMediator, Mediator>();
+        //    container.Register(typeof(IRequestHandler<,>), assemblies, webApiLifeStyle);
+        //    container.Register(typeof(IAsyncRequestHandler<,>), assemblies, webApiLifeStyle);
+        //    //container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
+        //    //container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
+        //    //container.RegisterSingleton(Console.Out);
+        //    container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
+        //    //container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
+        //}
+
+
+        //private static IEnumerable<Assembly> GetAssemblies() {
+        //    yield return typeof(IMediator).GetTypeInfo().Assembly;
+        //    yield return typeof(Ping).GetTypeInfo().Assembly;
+        //}
 
     }
 }

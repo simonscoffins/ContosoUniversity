@@ -192,9 +192,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\DepartmentsQueryController.cs" />
     <Compile Include="Api\StudentsCommandController.cs" />
-    <Compile Include="Api\StudentsQueryProcessorController.cs" />
+    <Compile Include="Api\StudentsQueryMediatorController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

@@ -2,23 +2,17 @@
 using System.Threading.Tasks;
 using SimpleInjector;
 
-namespace BusinessServices.CQS.Queries {
+namespace BusinessServices.CQS {
 
-    public class QueryProcessor : IQueryProcessor {
+    public class QueryMediator : IQueryMediator {
 
         private readonly Container _container;
 
-        public QueryProcessor(Container container) {
+        public QueryMediator(Container container) {
             _container = container;
         }
 
-        public TResult Process<TResult>(IQuery<TResult> query) {
-
-            var handler = GetHandler<TResult>(query, typeof(IQueryHandler<,>));
-            return handler.Handle((dynamic)query);
-        }
-
-        public async Task<TResult> ProcessAsync<TResult>(IQuery<TResult> query) {
+        public async Task<TResult> ExecuteAsync<TResult>(IQuery<TResult> query) {
 
             var handler = GetHandler<TResult>(query, typeof(IAsyncQueryHandler<,>));
             return await handler.Handle((dynamic)query);

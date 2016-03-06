@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BusinessServices {
+namespace BusinessServices.CQS {
 
     public interface IAsyncQueryHandler<in TQuery, TResult> where TQuery : IQuery<TResult> {
 

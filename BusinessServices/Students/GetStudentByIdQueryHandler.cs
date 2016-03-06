@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using BusinessServices.CQS;
 using DomainModel;
 using DTOs;
 using Repository;
@@ -10,7 +13,7 @@ namespace BusinessServices.Students {
         public int Id { get; set; }
     }
 
-    public class GetStudentByIdQueryHandler : IQueryHandler<GetStudentByIdQuery, StudentDto> {
+    public class GetStudentByIdQueryHandler : IAsyncQueryHandler<GetStudentByIdQuery, StudentDto> {
 
         private readonly IUnitOfWork _uow;
 
@@ -20,9 +23,9 @@ namespace BusinessServices.Students {
         }
 
 
-        public StudentDto Handle(GetStudentByIdQuery query) {
+        public async Task<StudentDto> Handle(GetStudentByIdQuery query) {
 
-            var student = _uow.Set<Student>().First(s => s.Id == query.Id);
+            var student = await _uow.Set<Student>().FirstAsync(s => s.Id == query.Id);
 
             return new StudentDto {
                 Id = student.Id,
