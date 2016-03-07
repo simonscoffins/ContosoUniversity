@@ -33,11 +33,11 @@ namespace BusinessServices.Students {
             var students = await _uow.Set<Student>()
                 .Where(s => s.EnrollmentDate >= startDateRange && s.EnrollmentDate <= endDateRange)
                 .Select(s => new StudentDto {
-                
+
                     Id = s.Id,
-                    FirstName = s.FirstMidName,
+                    //FirstName = s.FirstMidName,
                     LastName = s.LastName
-                
+
                 }).ToListAsync();
 
             return students;

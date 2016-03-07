@@ -29,7 +29,7 @@ namespace BusinessServices.Students {
 
             return new StudentDto {
                 Id = student.Id,
-                FirstName = student.FirstMidName,
+                //FirstName = student.FirstMidName,
                 LastName = student.LastName
             };
         }

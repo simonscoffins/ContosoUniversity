@@ -32,7 +32,7 @@ namespace BusinessServices.Students {
                 .Select(s => new StudentDto {
                   
                     Id = s.Id,
-                    FirstName = s.FirstMidName,
+                    //FirstName = s.FirstMidName,
                     LastName = s.LastName
                 }).ToListAsync();
 

@@ -25,48 +25,13 @@ namespace BusinessServices.Students {
 
         public async Task<IEnumerable<StudentDto>> Handle(GetAllStudentsQuery query) {
 
+            // todo: inject into class
             var mc = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Student, StudentDto>();
-                
             });
 
-            //var students = await _uow.Set<Student>()
-            //    .Select(s => new {s.Id, s.FirstMidName, s.LastName })
-            //    .ToListAsync();
-
-            // what gets sent to the db?
-            var z = _uow.Set<Student>().ProjectToList<StudentDto>(mc);
-
-
-            var y = await _uow.Set<Student>()
-                .Select(s => new {s.Id, s.FirstMidName, s.LastName})
-                .ProjectToListAsync<StudentDto>(mc);
-            
-
-//            var x = await _uow.Set<Student>().ProjectToListAsync<StudentDto>(mc);
-
-            return y;
-
-            //return Mapper.Map<List<StudentDto>>(students);
-
-
-            //var config = new MapperConfiguration()
-
-
-            //var ctx = new ContosoUniversityContext();
-
-            //var y = ctx.Students.ProjectTo()
-
-
-            //    .Select(s => new StudentDto {
-            //    Id = s.Id,
-            //    FirstName = s.FirstMidName,
-            //    LastName = s.LastName
-            //}).ToListAsync();
-
-
-
-//            return dto;
+            var students = await _uow.Set<Student>().ProjectToListAsync<StudentDto>(mc);
+            return students;
         }
     }
 }
