@@ -15,15 +15,12 @@
         var vm = this;
 
         vm.title = 'Home Page';
-        vm.test = '';
-
 
         // initialize
         init();
 
 
         function init() {
-            vm.test = 'BLAH BLAH';
         }
     }
 

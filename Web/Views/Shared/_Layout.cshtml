@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
 
 <html>
     <head>
@@ -12,14 +13,9 @@
         <meta name="author" content="">
         <link rel="icon" href="/favicon.ico">
 
-        <title>Fixed Top Navbar Example for Bootstrap</title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="/vendor/css/bootstrap.min.css" rel="stylesheet" />
-
-        <!-- Custom styles for this template -->
-        <link href="/css/styles.css" rel="stylesheet">
-
+        <title>Contoso University</title>
+        
+        @Styles.Render("~/bundles/styles")
 
     </head>
 <body ng-app="cu">
@@ -35,19 +31,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Project name</a>
+                    <a class="navbar-brand" href="#">Contoso University</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
 
                         <li><a ui-sref="home">Home</a></li>
                         <li><a ui-sref="about">About</a></li>
-
-                        @*<li><a href="/home">Home</a></li>
-                        <li><a href="/about">About</a></li>*@
-                        @*<li><a href="#/blah">Blah</a></li>*@
-
-
+                        <li><a ui-sref="students">Students</a></li>
+                        <li><a ui-sref="courses">Courses</a></li>
+                        <li><a ui-sref="instructors">Instructors</a></li>
+                        <li><a ui-sref="departments">Departments</a></li>                        
                         
 
                         @*<li class="active"><a href="#">Home</a></li>*@
@@ -79,17 +73,6 @@
 
     <div class="container">
 
-        <!-- Main component for a primary marketing message or call to action -->
-        <div class="jumbotron">
-            <h1>Navbar example</h1>
-            <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-            <p>To see the difference between static and fixed top navbars, just scroll.</p>
-            <p>
-                <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-            </p>
-        </div>
-
-
         @RenderBody()
 
     </div> <!-- /container -->
@@ -97,45 +80,24 @@
             <h5>Footer</h5>
         </footer>*@
 
-    <!-- Bootstrap core JavaScript
-        ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>*@
-    @*<script async src="/vendor/js/jquery-2.1.4.min.js"></script>
-        <script async src="/vendor/js/bootstrap.min.js"></script>*@
-
-    <!-- Angular Core -->
-    <script src="/vendor/js/angular.min.js"></script>
-    @*<script src="/vendor/js/angular-route.min.js"></script>*@
-    <script src="/vendor/js/angular-ui-router.min.js"></script>
-    <script src="/vendor/js/angular-animate.min.js"></script>
-    <script src="/vendor/js/angular-sanitize.min.js"></script>
-
+    <!-- vendor libraries -->
+    @Scripts.Render("~/bundles/vendor")
 
     <!-- Application -->
+    
     <!-- Modules first -->
-    <script src="/app/cu.module.js"></script>
-    <script src="/app/core/core.module.js"></script>
-    <script src="/app/blocks/blocks.module.js"></script>
-    <script src="/app/home/home.module.js"></script>
-    <script src="/app/about/about.module.js"></script>
+    @Scripts.Render("~/bundles/modules")
+
+    <!-- App -->
+    @Scripts.Render("~/bundles/app")
+    
+    
+    <!-- Templates -->
+    @(BundleTable.EnableOptimizations ?
+        Scripts.Render("~/bundles/templates") :
+        Scripts.RenderFormat("<script type=\"text/ng-template\" src=\"{0}\"></script>", "~/bundles/templates"))
 
 
-    <!-- Blocks -->
-    <script src="/app/blocks/route-helper-provider.js"></script>
- 
-    <!-- Home -->
-    <script src="/app/home/home-route.js"></script>
-    <script src="/app/home/home-controller.js"></script>
-
-    <!-- About -->
-    <script src="/app/about/about-route.js"></script>
-    <script src="/app/about/about-controller.js"></script>    
-
-    <!-- Testing -->
-    @*<script src="/app/check/check.module.js"></script>
-    <script src="/app/check/blah-controller.js"></script>*@
-    @*<script src="/app/check/foo-app.js"></script>*@
 
 </body>
 </html>

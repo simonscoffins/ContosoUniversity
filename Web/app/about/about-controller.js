@@ -13,15 +13,12 @@
     function about() {
         var vm = this;
 
-        vm.title = 'About Page';
-        vm.test = '';
-
+        vm.title = 'About';
 
         // initialize
         init();
 
         function init() {
-            vm.test = 'Check This';
         }
     }
 

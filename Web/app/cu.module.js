@@ -8,7 +8,12 @@ var CU = CU || {};
 
         'cu.core',
         'cu.home',
-        'cu.about'
+        'cu.about',
+        'cu.students',
+        'cu.courses',
+        'cu.instructors',
+        'cu.departments'
+
     ]);
 
 })();

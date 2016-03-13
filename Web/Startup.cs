@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Optimization;
 using System.Web.Routing;
 using Microsoft.Owin;
 using Owin;
@@ -19,6 +20,7 @@ namespace Web {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             SimpleInjectorInitializer.Initialize();
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 
             // trigger db initialization
